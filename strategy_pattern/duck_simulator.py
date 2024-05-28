@@ -1,5 +1,5 @@
-from strategy.duck import Duck, DecoyDuck, MallardDuck, RubberDuck
-from strategy.fly_behavior import FlyRocketPowered
+from strategy_pattern.duck import Duck, DecoyDuck, MallardDuck, RubberDuck
+from strategy_pattern.fly_behavior import FlyRocketPowered
 
 
 def main():
