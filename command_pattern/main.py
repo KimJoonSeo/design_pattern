@@ -1,6 +1,7 @@
 from command_pattern.command import LightOnCommand, GarageDoorOpenCommand, LightOffCommand, GarageDoorCloseCommand, \
-    StereoOffCommand, StereoOnWithCDCommand
-from command_pattern.receiver import Light, GarageDoor, Stereo
+    StereoOffCommand, StereoOnWithCDCommand, CellingFanMediumCommand, CellingFanHighCommand, CellingFanOffCommand, \
+    CellingFanLowCommand
+from command_pattern.receiver import Light, GarageDoor, Stereo, CellingFan
 from command_pattern.invoker import SimpleRemoteControl, RemoteControl
 
 
@@ -53,6 +54,29 @@ def main():
     remote_control.undo_button_was_pushed()
     print('after push undo')
     print(str(remote_control))
+
+
+    print("------------선풍기 Command TEST--------------")
+    remote_control_undo = RemoteControl()
+    celling_fan = CellingFan("living room")
+
+    fan_medium_command = CellingFanMediumCommand(celling_fan)
+    fan_high_command = CellingFanHighCommand(celling_fan)
+    fan_off_command = CellingFanOffCommand(celling_fan)
+    fan_low_command = CellingFanLowCommand(celling_fan)
+
+    remote_control_undo.set_command(0, fan_medium_command, fan_off_command)
+    remote_control_undo.set_command(1, fan_high_command, fan_off_command)
+    remote_control_undo.on_button_was_pushed(0)
+    remote_control_undo.off_button_was_pushed(0)
+    print(str(remote_control_undo))
+    remote_control_undo.undo_button_was_pushed()
+
+    remote_control_undo.on_button_was_pushed(1)
+    print(str(remote_control_undo))
+    remote_control_undo.undo_button_was_pushed()
+    print(str(remote_control_undo))
+
 
 
 

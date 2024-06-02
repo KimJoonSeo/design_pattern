@@ -22,6 +22,7 @@ class GarageDoor:
     def light_off(self):
         print("창고 문빛이 꺼졌습니다.")
 
+
 class Stereo:
     def on(self):
         print("오디오가 켜졌습니다.")
@@ -38,3 +39,30 @@ class Stereo:
     def set_volume(self, volume: int):
         print("오디오의 볼륨을 {}으로 세팅합니다.".format(str(volume)))
 
+
+class CellingFan:
+    HIGH = 3
+    MEDIUM = 2
+    LOW = 1
+    OFF = 0
+    location: str
+    speed: int
+
+    def __init__(self, location: str):
+        self.location = location
+        self.speed = self.OFF
+
+    def high(self):
+        self.speed = self.HIGH
+
+    def medium(self):
+        self.speed = self.MEDIUM
+
+    def low(self):
+        self.speed = self.LOW
+
+    def off(self):
+        self.speed = self.OFF
+
+    def get_speed(self) -> int:
+        return self.speed

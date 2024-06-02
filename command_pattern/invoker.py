@@ -16,12 +16,12 @@ class SimpleRemoteControl:
 class RemoteControl:
     on_commands: List[Optional[Command]]
     off_commands: List[Optional[Command]]
-    undo_command: Optional[Command]
+    undo_commands: List[Command]
 
     def __init__(self) -> None:
         self.on_commands = [None] * 7
         self.off_commands = [None] * 7
-        self.undo_command = None
+        self.undo_commands = []
 
     def set_command(self, slot: int, on_command: Command, off_command: Command):
         self.on_commands[slot] = on_command
@@ -30,16 +30,17 @@ class RemoteControl:
     def on_button_was_pushed(self, slot: int):
         if self.on_commands[slot]:
             self.on_commands[slot].execute()
-            self.undo_command = self.on_commands[slot]
+            self.undo_commands.append(self.on_commands[slot])
 
     def off_button_was_pushed(self, slot: int):
         if self.off_commands[slot]:
             self.off_commands[slot].execute()
-            self.undo_command = self.off_commands[slot]
+            self.undo_commands.append(self.off_commands[slot])
 
     def undo_button_was_pushed(self):
-        if self.undo_command:
-            self.undo_command.undo()
+        if self.undo_commands:
+            undo_command = self.undo_commands.pop()
+            undo_command.undo()
 
     def __str__(self):
         res: str = "\n------리모컨------\n"
@@ -53,6 +54,6 @@ class RemoteControl:
                                                    "NoCommand",
                                                    "NoCommand")
 
-        res += '[Undo] {}'.format(type(self.undo_command).__name__ if self.undo_command else 'None')
+        res += '[Undo] {}'.format(type(self.undo_commands[-1]).__name__ if self.undo_commands else 'None')
 
         return res

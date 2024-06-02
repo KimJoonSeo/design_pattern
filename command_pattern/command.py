@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from command_pattern.receiver import Light, GarageDoor, Stereo
+from command_pattern.receiver import Light, GarageDoor, Stereo, CellingFan
 
 
 class Command(ABC):
@@ -91,3 +91,111 @@ class StereoOffCommand(Command):
 
     def execute(self) -> None:
         self.stereo.off()
+
+
+class CellingFanHighCommand(Command):
+    celling_fan: CellingFan
+    prev_speed: int
+
+    def __init__(self, celling_fan: CellingFan):
+        self.celling_fan = celling_fan
+
+    def execute(self) -> None:
+        self.prev_speed = self.celling_fan.get_speed()
+        self.celling_fan.high()
+
+    def undo(self) -> None:
+        if self.prev_speed == CellingFan.HIGH:
+            self.celling_fan.high()
+        elif self.prev_speed == CellingFan.MEDIUM:
+            self.celling_fan.medium()
+        elif self.prev_speed == CellingFan.LOW:
+            self.celling_fan.low()
+        elif self.prev_speed == CellingFan.OFF:
+            self.celling_fan.off()
+
+
+class CellingFanHighCommand(Command):
+    celling_fan: CellingFan
+    prev_speed: int
+
+    def __init__(self, celling_fan: CellingFan):
+        self.celling_fan = celling_fan
+
+    def execute(self) -> None:
+        self.prev_speed = self.celling_fan.get_speed()
+        self.celling_fan.high()
+
+    def undo(self) -> None:
+        if self.prev_speed == CellingFan.HIGH:
+            self.celling_fan.high()
+        elif self.prev_speed == CellingFan.MEDIUM:
+            self.celling_fan.medium()
+        elif self.prev_speed == CellingFan.LOW:
+            self.celling_fan.low()
+        elif self.prev_speed == CellingFan.OFF:
+            self.celling_fan.off()
+
+
+class CellingFanOffCommand(Command):
+    celling_fan: CellingFan
+    prev_speed: int
+
+    def __init__(self, celling_fan: CellingFan):
+        self.celling_fan = celling_fan
+
+    def execute(self) -> None:
+        self.prev_speed = self.celling_fan.get_speed()
+        self.celling_fan.off()
+
+    def undo(self) -> None:
+        if self.prev_speed == CellingFan.HIGH:
+            self.celling_fan.high()
+        elif self.prev_speed == CellingFan.MEDIUM:
+            self.celling_fan.medium()
+        elif self.prev_speed == CellingFan.LOW:
+            self.celling_fan.low()
+        elif self.prev_speed == CellingFan.OFF:
+            self.celling_fan.off()
+
+class CellingFanLowCommand(Command):
+    celling_fan: CellingFan
+    prev_speed: int
+
+    def __init__(self, celling_fan: CellingFan):
+        self.celling_fan = celling_fan
+
+    def execute(self) -> None:
+        self.prev_speed = self.celling_fan.get_speed()
+        self.celling_fan.low()
+
+    def undo(self) -> None:
+        if self.prev_speed == CellingFan.HIGH:
+            self.celling_fan.high()
+        elif self.prev_speed == CellingFan.MEDIUM:
+            self.celling_fan.medium()
+        elif self.prev_speed == CellingFan.LOW:
+            self.celling_fan.low()
+        elif self.prev_speed == CellingFan.OFF:
+            self.celling_fan.off()
+
+class CellingFanMediumCommand(Command):
+    celling_fan: CellingFan
+    prev_speed: int
+
+    def __init__(self, celling_fan: CellingFan):
+        self.celling_fan = celling_fan
+
+    def execute(self) -> None:
+        self.prev_speed = self.celling_fan.get_speed()
+        self.celling_fan.medium()
+
+    def undo(self) -> None:
+        if self.prev_speed == CellingFan.HIGH:
+            self.celling_fan.high()
+        elif self.prev_speed == CellingFan.MEDIUM:
+            self.celling_fan.medium()
+        elif self.prev_speed == CellingFan.LOW:
+            self.celling_fan.low()
+        elif self.prev_speed == CellingFan.OFF:
+            self.celling_fan.off()
