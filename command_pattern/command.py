@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import List
 
 from command_pattern.receiver import Light, GarageDoor, Stereo, CellingFan
 
@@ -158,6 +159,7 @@ class CellingFanOffCommand(Command):
         elif self.prev_speed == CellingFan.OFF:
             self.celling_fan.off()
 
+
 class CellingFanLowCommand(Command):
     celling_fan: CellingFan
     prev_speed: int
@@ -179,6 +181,7 @@ class CellingFanLowCommand(Command):
         elif self.prev_speed == CellingFan.OFF:
             self.celling_fan.off()
 
+
 class CellingFanMediumCommand(Command):
     celling_fan: CellingFan
     prev_speed: int
@@ -199,3 +202,18 @@ class CellingFanMediumCommand(Command):
             self.celling_fan.low()
         elif self.prev_speed == CellingFan.OFF:
             self.celling_fan.off()
+
+
+class MacroCommand(Command):
+    commands: List[Command]
+
+    def __init__(self, commands):
+        self.commands = commands
+
+    def undo(self) -> None:
+        for command in self.commands:
+            command.undo()
+
+    def execute(self) -> None:
+        for command in self.commands:
+            command.execute()
